@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 type Props = {}
 
@@ -19,16 +20,16 @@ const FooterComponent = (props: Props) => {
 					<ul className='footer__links'>
 						<li className='footer__namelinks'>Links</li>
 						<li className='footer__linksitem'>
-							<a href=''>Home</a>
+							<a href='/'>Home</a>
 						</li>
 						<li className='footer__linksitem'>
-							<a href=''>Shop</a>
+							<a href='/shop'>Shop</a>
 						</li>
 						<li className='footer__linksitem'>
-							<a href=''>About</a>
+							<a href='/about'>About</a>
 						</li>
 						<li className='footer__linksitem'>
-							<a href=''>Contact</a>
+							<a href='/contact'>Contact</a>
 						</li>
 					</ul>
 					<ul className='footer__helps'>

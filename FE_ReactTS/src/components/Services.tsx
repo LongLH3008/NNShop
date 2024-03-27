@@ -1,8 +1,8 @@
 import React from 'react'
-import iconTrophy from '../../assets/images/trophy 1.png'
-import iconWarranty from '../../assets/images/guarantee.png'
-import iconShip from '../../assets/images/shipping.png'
-import iconCustomerSupport from '../../assets/images/customer-support.png'
+import iconTrophy from '@/assets/images/trophy 1.png'
+import iconWarranty from '@/assets/images/guarantee.png'
+import iconShip from '@/assets/images/shipping.png'
+import iconCustomerSupport from '@/assets/images/customer-support.png'
 
 type Props = {}
 

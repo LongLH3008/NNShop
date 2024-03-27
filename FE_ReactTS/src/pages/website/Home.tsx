@@ -3,7 +3,7 @@ import HeaderComponent from '@/components/Header'
 import BannerComponent from '@/components/home/Banner'
 import BlogComponent from '@/components/home/Blog'
 import NewProductsComponent from '@/components/home/NewProducts'
-import ServicesComponent from '@/components/home/Services'
+import ServicesComponent from '@/components/Services'
 import ShopComponent from '@/components/home/Shop'
 
 const Home: React.FC = () => {

@@ -6,6 +6,7 @@ import linkeinIcon from '@/assets/icons/linkein.png'
 import twitterIcon from '@/assets/icons/twitter.png'
 import starLogo from '@/assets/icons/star.png'
 import halfStarLogo from '@/assets/icons/half_star.png'
+import RelatedProduct from '@/components/RelatedProduct'
 
 type Props = {}
 
@@ -169,150 +170,7 @@ const DetailProduct = (props: Props) => {
 			</section>
 			<div className='__crossline_detailpage' />
 			{/* End More Info */}
-			<section className='product'>
-				<div className='container'>
-					<div className='product__relatedTitle'>
-						<h4>Related Products</h4>
-					</div>
-					<div className='product__list'>
-						<div className='product__row'>
-							<div className='product__item'>
-								<div style={{ backgroundColor: '#e97171' }} className='product__status'>
-									<p>-50%</p>
-								</div>
-								<div className='product__imageItem'>
-									<img src='https://picsum.photos/id/55/285/300' alt='' className='' />
-								</div>
-								<div className='product__infoItem'>
-									<p className='product__nameItem'>Syltherine</p>
-									<p className='product__cateItem'>Stylish cafe chair</p>
-									<div className='product__priceItem'>
-										<span className='product__newprice'>5.000.000</span>
-										<span className='product__oldprice'>5.000.000</span>
-									</div>
-								</div>
-								<div className='product__feature'>
-									<div className='__btns'>
-										<button className='__view'>View product</button>
-										<button className='__addtocart'>Add to cart</button>
-										<div className='__more'>
-											<span className='__share'>
-												<img src='../assets/icons/gridicons_share.png' alt='' /> Share
-											</span>
-											<span className='__share'>
-												<img src='../assets/icons/compare-svgrepo-com 1.png' alt='' /> Compare
-											</span>
-											<span className='__like'>
-												<img src='../assets/icons/Heart.png' alt='' /> Like
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
-							{/* End Prod  */}
-							<div className='product__item'>
-								<div style={{ backgroundColor: '#2ec1ac' }} className='product__status'>
-									<p>New</p>
-								</div>
-								<div className='product__imageItem'>
-									<img src='https://picsum.photos/id/55/285/300' alt='' className='' />
-								</div>
-								<div className='product__infoItem'>
-									<p className='product__nameItem'>Syltherine</p>
-									<p className='product__cateItem'>Stylish cafe chair</p>
-									<div className='product__priceItem'>
-										<span className='product__newprice'>5.000.000</span>
-										<span className='product__oldprice'>5.000.000</span>
-									</div>
-								</div>
-								<div className='product__feature'>
-									<div className='__btns'>
-										<button className='__view'>View product</button>
-										<button className='__addtocart'>Add to cart</button>
-										<div className='__more'>
-											<span className='__share'>
-												<img src='../assets/icons/gridicons_share.png' alt='' /> Share
-											</span>
-											<span className='__share'>
-												<img src='../assets/icons/compare-svgrepo-com 1.png' alt='' /> Compare
-											</span>
-											<span className='__like'>
-												<img src='../assets/icons/Heart.png' alt='' /> Like
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
-							{/* End Prod  */}
-							<div className='product__item'>
-								<div className='product__imageItem'>
-									<img src='https://picsum.photos/id/55/285/300' alt='' className='' />
-								</div>
-								<div className='product__infoItem'>
-									<p className='product__nameItem'>Syltherine</p>
-									<p className='product__cateItem'>Stylish cafe chair</p>
-									<div className='product__priceItem'>
-										<span className='product__newprice'>5.000.000</span>
-										<span className='product__oldprice'>5.000.000</span>
-									</div>
-								</div>
-								<div className='product__feature'>
-									<div className='__btns'>
-										<button className='__view'>View product</button>
-										<button className='__addtocart'>Add to cart</button>
-										<div className='__more'>
-											<span className='__share'>
-												<img src='../assets/icons/gridicons_share.png' alt='' /> Share
-											</span>
-											<span className='__share'>
-												<img src='../assets/icons/compare-svgrepo-com 1.png' alt='' /> Compare
-											</span>
-											<span className='__like'>
-												<img src='../assets/icons/Heart.png' alt='' /> Like
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
-							{/* End Prod  */}
-							<div className='product__item'>
-								<div className='product__imageItem'>
-									<img src='https://picsum.photos/id/55/285/300' alt='' className='' />
-								</div>
-								<div className='product__infoItem'>
-									<p className='product__nameItem'>Syltherine</p>
-									<p className='product__cateItem'>Stylish cafe chair</p>
-									<div className='product__priceItem'>
-										<span className='product__newprice'>5.000.000</span>
-										<span className='product__oldprice'>5.000.000</span>
-									</div>
-								</div>
-								<div className='product__feature'>
-									<div className='__btns'>
-										<button className='__view'>View product</button>
-										<button className='__addtocart'>Add to cart</button>
-										<div className='__more'>
-											<span className='__share'>
-												<img src='../assets/icons/gridicons_share.png' alt='' /> Share
-											</span>
-											<span className='__share'>
-												<img src='../assets/icons/compare-svgrepo-com 1.png' alt='' /> Compare
-											</span>
-											<span className='__like'>
-												<img src='../assets/icons/Heart.png' alt='' /> Like
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
-							{/* End Prod  */}
-						</div>
-					</div>
-					<div className='product__showmore'>
-						<button className='product__showmorebtn'>Show More</button>
-					</div>
-				</div>
-			</section>
+			<RelatedProduct cate={product?.category} />
 			<div className='__crosslinefooter' />
 			{/* End Related Product */}
 		</>

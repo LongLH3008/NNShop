@@ -1,8 +1,8 @@
 import React from 'react'
-import iconShare from '../assets/icons/gridicons_share.png'
-import iconCompare from '../assets/icons/compare-svgrepo-com 1.png'
-import iconLike from '../assets/icons/Heart.png'
-import { Product } from '~/interfaces/Products'
+import iconShare from '@/assets/icons/gridicons_share.png'
+import iconCompare from '@/assets/icons/compare-svgrepo-com 1.png'
+import iconLike from '@/assets/icons/Heart.png'
+import { Product } from '@/interfaces/Products'
 import { Link } from 'react-router-dom'
 
 interface ProductProps {
