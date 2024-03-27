@@ -170,7 +170,7 @@ const DetailProduct = (props: Props) => {
 			</section>
 			<div className='__crossline_detailpage' />
 			{/* End More Info */}
-			<RelatedProduct cate={product?.category} />
+			<RelatedProduct category={product?.category} id={product?.id} />
 			<div className='__crosslinefooter' />
 			{/* End Related Product */}
 		</>

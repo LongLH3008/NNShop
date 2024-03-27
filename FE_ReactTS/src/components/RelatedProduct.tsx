@@ -5,17 +5,18 @@ import ProductComponent from './Product'
 import { Product } from '@/interfaces/Products'
 
 type prop = {
-	cate: string
+	category: string | any
+	id: number | string | any
 }
 
-const RelatedProduct = (category: prop) => {
+const RelatedProduct: React.FC<prop> = ({ category, id }) => {
 	const {
 		data: relatedProducts,
 		isLoading,
 		isError,
 	} = useQuery({
 		queryKey: ['PRODUCT_KEY'],
-		queryFn: () => getRelatedProducts(category?.cate),
+		queryFn: () => getRelatedProducts({ category, id }),
 	})
 
 	if (isLoading) return <p>... Loading</p>
@@ -24,8 +25,8 @@ const RelatedProduct = (category: prop) => {
 	return (
 		<section className='product'>
 			<div className='container'>
-				<div className='product__title'>
-					<h4>Related Product</h4>
+				<div className='text-center'>
+					<h4 className='text-3xl text-zinc-700 mb-16'>Related Product</h4>
 				</div>
 				<div className='product__list'>
 					{relatedProducts?.map((pd: Product, index: number) => <ProductComponent key={index} product={pd} />)}{' '}

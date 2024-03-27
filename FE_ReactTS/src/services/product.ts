@@ -1,6 +1,5 @@
 import instance from '@/configs/axios'
 import { Product } from '@/interfaces/Products'
-import { release } from 'os'
 
 export const getAllProducts = async (): Promise<Product[]> => {
 	try {
@@ -32,16 +31,17 @@ export const getNewProducts = async (): Promise<Product[]> => {
 	}
 }
 
-export const getRelatedProducts = async (category: string) => {
+type prod = {
+	category: string
+	id: number | string
+}
+
+export const getRelatedProducts = async (prod: prod) => {
 	try {
 		const response = await instance.get(`/products`)
-		const related = await response.data.filter((pd: Product) => pd?.category === category)
+		const related = await response.data.filter((pd: Product) => pd.category === prod.category && pd.id != prod.id)
 		console.log(related)
-
-		if (related.length > 4) {
-			return related.reverse().splice(Math.ceil(Math.random() * related.length - 5), 4)
-		}
-		return related
+		return related.splice(0, 4)
 	} catch (error) {
 		console.log(error)
 	}
