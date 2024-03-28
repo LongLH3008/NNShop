@@ -31,6 +31,15 @@ export const getNewProducts = async (): Promise<Product[]> => {
 	}
 }
 
+export const addProduct = async (product: Product) => {
+	try {
+		const response = await instance.post('/products', product)
+		return response.data
+	} catch (error) {
+		console.log(error)
+	}
+}
+
 type prod = {
 	category: string
 	id: number | string
