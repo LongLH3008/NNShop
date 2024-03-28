@@ -17,7 +17,10 @@ function App() {
 			<Routes>
 				<Route path='/' element={<Layout />}>
 					<Route path='/' index element={<Home />} />
-					<Route path='shop' element={<ShopPage />} />
+					<Route path='shop' element={<ShopPage />}>
+						{/* <Route path='brand/:slug' element={<Home />} />
+						<Route path='category/:slug' element={<Home />} /> */}
+					</Route>
 					<Route path='about' element={<Home />} />
 					<Route path='contact' element={<Home />} />
 					<Route path='cart' element={<CartPage />} />

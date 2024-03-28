@@ -1,14 +1,27 @@
-import React, { useEffect, useState } from 'react'
-import ProductComponent from '@/components/Product'
+import React, { ChangeEventHandler, useEffect, useState } from 'react'
 import { Product } from '@/interfaces/Products'
 import filterIcon from '@/assets/icons/filtering.png'
 import gridIcon from '@/assets/icons/grid.png'
 import listIcon from '@/assets/icons/Vector.png'
+import ListProducts from '@/components/ListProducts'
 
 type Props = {}
 
 const ShopPage = (props: Props) => {
 	const [products, setProducts] = useState<Product[]>([])
+	const [display, setDisplay] = useState('h-0')
+	const [filter, setFilter] = useState({ category: '', keyword: '' })
+
+	const chooseCate =
+		(cate: string): React.MouseEventHandler<HTMLLIElement> =>
+		() => {
+			setFilter({ category: cate, keyword: '' })
+		}
+
+	const searchKeyword = (event: React.ChangeEvent<HTMLInputElement>) => {
+		let kw = event.target.value
+		setFilter({ category: '', keyword: kw })
+	}
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -32,7 +45,7 @@ const ShopPage = (props: Props) => {
 			</section>
 			<div className='filter'>
 				<div className='filter__byChoose'>
-					<span className='__filtering'>
+					<span className='__filtering' onMouseEnter={() => setDisplay(display === 'h-0' ? 'h-56' : 'h-0')}>
 						<img src={filterIcon} alt='' />
 						<p>Filter</p>
 					</span>
@@ -52,14 +65,29 @@ const ShopPage = (props: Props) => {
 					<p>Show</p>
 					<span className='__resultsShowing'>16</span>
 					<p>Short by</p>
-					<input className='__inputFilKeyword' type='text' placeholder='Default' />
+					<input className='__inputFilKeyword' type='text' placeholder='Default' onChange={searchKeyword} />
 				</div>
 			</div>
-			<section className='product'>
-				<div className='container'>
-					<div className='product__list'>{products?.map((pd, index) => <ProductComponent key={index} product={pd} />)} </div>
-				</div>
-			</section>
+			<div className={'bg-[#f9f1e9] shadow-sm mb-30 overflow-hidden border-zinc-200 px-24 ' + display} onMouseLeave={() => setDisplay('h-0')}>
+				<ul>
+					<li className='cursor-pointer hover:text-zinc-700 hover:bg-red-600' onClick={chooseCate('smartphones')}>
+						smartphones
+					</li>
+					<li className='cursor-pointer hover:text-zinc-700 hover:bg-red-600' onClick={chooseCate('smartphones222')}>
+						smartphones222
+					</li>
+					<li className='cursor-pointer hover:text-zinc-700 hover:bg-red-600' onClick={chooseCate('smartphones33')}>
+						smartphones33
+					</li>
+					<li className='cursor-pointer hover:text-zinc-700 hover:bg-red-600' onClick={chooseCate('smartphones4')}>
+						smartphones4
+					</li>
+					<li className='cursor-pointer hover:text-zinc-700 hover:bg-red-600' onClick={chooseCate('smartphones0')}>
+						smartphones0
+					</li>
+				</ul>
+			</div>
+			<ListProducts data={products} category={filter.category} keyword={filter.keyword} />
 		</>
 	)
 }
