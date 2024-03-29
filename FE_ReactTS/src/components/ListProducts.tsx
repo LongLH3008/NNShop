@@ -1,5 +1,4 @@
 import { Product } from '@/interfaces/Products'
-import React from 'react'
 import ProductComponent from './Product'
 
 type Props = {
@@ -11,12 +10,11 @@ type Props = {
 const ListProducts = (prop: Props) => {
 	const { category, keyword, data } = prop
 
-	let products = data
-	if (category !== '') {
-		products = data.filter((pd) => pd.category === category)
-	} else if (keyword !== '') {
-		products = data.filter((pd) => pd.title?.includes(keyword) && pd)
-	}
+	let products =
+		category !== ''
+			? data.filter((pd) => pd.title?.includes(keyword) && pd.category === category)
+			: data.filter((pd) => pd.title?.includes(keyword))
+
 	return (
 		<section className='product'>
 			<div className='container'>
@@ -26,7 +24,7 @@ const ListProducts = (prop: Props) => {
 					</div>
 				) : (
 					<p>
-						There is no data products with {category !== '' ? 'category ' + category : ''} {keyword !== '' ? 'keyword ' + keyword : ''} :(
+						There is no data products with {category !== '' ? +category : ''} {keyword !== '' ? 'keyword ' + keyword : ''} :(
 					</p>
 				)}
 			</div>

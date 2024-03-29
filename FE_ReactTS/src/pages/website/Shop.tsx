@@ -7,15 +7,26 @@ import ListProducts from '@/components/ListProducts'
 
 type Props = {}
 
+type Category = {
+	name: string
+}
+
+type data = {
+	products: Product[]
+	categories: Category[]
+}
+
 const ShopPage = (props: Props) => {
-	const [products, setProducts] = useState<Product[]>([])
+	const [data, setData] = useState<data>({ products: [], categories: [] })
 	const [display, setDisplay] = useState('h-0')
+	const [activeCate, setActiveCate] = useState('')
 	const [filter, setFilter] = useState({ category: '', keyword: '' })
 
 	const chooseCate =
 		(cate: string): React.MouseEventHandler<HTMLLIElement> =>
 		() => {
 			setFilter({ category: cate, keyword: '' })
+			setActiveCate(cate)
 		}
 
 	const searchKeyword = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,8 +38,10 @@ const ShopPage = (props: Props) => {
 		const fetchData = async () => {
 			try {
 				const res = await fetch(`http://localhost:3000/products`)
+				const res2 = await fetch(`http://localhost:3000/categories`)
 				const data: Product[] = await res.json()
-				setProducts(data)
+				const data2: Category[] = await res2.json()
+				setData({ products: data, categories: data2 })
 			} catch (err) {
 				console.log(err)
 			}
@@ -45,7 +58,7 @@ const ShopPage = (props: Props) => {
 			</section>
 			<div className='filter'>
 				<div className='filter__byChoose'>
-					<span className='__filtering' onMouseEnter={() => setDisplay(display === 'h-0' ? 'h-56' : 'h-0')}>
+					<span className='__filtering' onMouseEnter={() => setDisplay(display === 'h-0' ? 'h-56 pb-10' : 'h-0')}>
 						<img src={filterIcon} alt='' />
 						<p>Filter</p>
 					</span>
@@ -69,25 +82,21 @@ const ShopPage = (props: Props) => {
 				</div>
 			</div>
 			<div className={'bg-[#f9f1e9] shadow-sm mb-30 overflow-hidden border-zinc-200 px-24 ' + display} onMouseLeave={() => setDisplay('h-0')}>
-				<ul>
-					<li className='cursor-pointer hover:text-zinc-700 hover:bg-red-600' onClick={chooseCate('smartphones')}>
-						smartphones
-					</li>
-					<li className='cursor-pointer hover:text-zinc-700 hover:bg-red-600' onClick={chooseCate('smartphones222')}>
-						smartphones222
-					</li>
-					<li className='cursor-pointer hover:text-zinc-700 hover:bg-red-600' onClick={chooseCate('smartphones33')}>
-						smartphones33
-					</li>
-					<li className='cursor-pointer hover:text-zinc-700 hover:bg-red-600' onClick={chooseCate('smartphones4')}>
-						smartphones4
-					</li>
-					<li className='cursor-pointer hover:text-zinc-700 hover:bg-red-600' onClick={chooseCate('smartphones0')}>
-						smartphones0
+				<ul className='overscrollHidden h-48 overflow-y-scroll'>
+					{data.categories.map((c) => (
+						<li
+							className={activeCate == c.name ? 'bg-zinc-500 text-white p-2' : 'p-2 cursor-pointer hover:text-white hover:bg-zinc-400'}
+							onClick={chooseCate(c.name)}
+						>
+							{c.name}
+						</li>
+					))}
+					<li className='p-2 cursor-pointer hover:text-white hover:bg-zinc-400' onClick={chooseCate('')}>
+						All
 					</li>
 				</ul>
 			</div>
-			<ListProducts data={products} category={filter.category} keyword={filter.keyword} />
+			<ListProducts data={data.products} category={filter.category} keyword={filter.keyword} />
 		</>
 	)
 }
