@@ -44,6 +44,20 @@ const productSchema = Joi.object({
 		"array.includesRequiredUnknowns": "Each item in the array must be a string",
 		"string.base": "Each image must be a string",
 	}),
+	sizes: Joi.array().items(Joi.string()).required().min(3).messages({
+		"any.required": "Size are required",
+		"array.min": "At least {#limit} sizes",
+		"array.base": "Size must be an array",
+		"array.includesRequiredUnknowns": "Each item in the array must be a string",
+		"string.base": "Each size must be a string",
+	}),
+	colors: Joi.array().items(Joi.string()).required().min(3).messages({
+		"any.required": "Color are required",
+		"array.min": "At least {#limit} colors",
+		"array.base": "Colors must be an array",
+		"array.includesRequiredUnknowns": "Each item in the array must be a string",
+		"string.base": "Each color must be a string",
+	}),
 	tag: Joi.array().items(Joi.string()).max(3).messages({
 		"any.required": "Tag are required",
 		"array.min": "At most {#limit} Tags",

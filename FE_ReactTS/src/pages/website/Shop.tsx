@@ -25,13 +25,13 @@ const ShopPage = (props: Props) => {
 	const chooseCate =
 		(cate: string): React.MouseEventHandler<HTMLLIElement> =>
 		() => {
-			setFilter({ category: cate, keyword: '' })
+			setFilter({ category: cate, keyword: filter.keyword })
 			setActiveCate(cate)
 		}
 
 	const searchKeyword = (event: React.ChangeEvent<HTMLInputElement>) => {
 		let kw = event.target.value
-		setFilter({ category: '', keyword: kw })
+		setFilter({ category: filter.category, keyword: kw })
 	}
 
 	useEffect(() => {

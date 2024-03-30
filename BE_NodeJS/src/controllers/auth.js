@@ -1,4 +1,4 @@
-import User from "../models/auth.js";
+import User from "../models/user.js";
 import { signinSchema, signupSchema } from "../schemas/user.js";
 import { StatusCodes } from "http-status-codes";
 import bcryptjs from "bcryptjs";

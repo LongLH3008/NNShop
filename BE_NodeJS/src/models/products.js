@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import defaultIMG from "../assets/defaultIMG.jpg";
 
 const schema = new Schema(
 	{
@@ -36,7 +37,7 @@ const schema = new Schema(
 		},
 		category: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Category",
+			ref: "Categories",
 			required: true,
 		},
 		thumbnail: {
@@ -45,7 +46,15 @@ const schema = new Schema(
 		},
 		images: {
 			type: Array,
-			default: ["default.jpg", "default.jpg", "default.jpg", "default.jpg"],
+			default: [defaultIMG, defaultIMG, defaultIMG, defaultIMG],
+		},
+		sizes: {
+			type: Array,
+			default: [],
+		},
+		colors: {
+			type: Array,
+			default: [],
 		},
 		tags: {
 			type: Array,
@@ -66,4 +75,4 @@ const schema = new Schema(
 	}
 );
 
-export default mongoose.model("Products", schema);
+export default mongoose.model("Product", schema);
