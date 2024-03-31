@@ -63,11 +63,13 @@ export const signin = async (req, res) => {
 		const token = jwt.sign({ userId: userExist._id }, "123456");
 		res.status(200).json({
 			message: "Welcome",
-			data: userExist,
+			user: userExist,
 			token,
 		});
 	} catch (error) {
-		console.log("Error: " + error.message);
+		res.status(400).json({
+			error: "fafwefewf",
+		});
 	}
 };
 

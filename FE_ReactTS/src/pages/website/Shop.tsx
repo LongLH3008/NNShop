@@ -1,11 +1,9 @@
-import React, { ChangeEventHandler, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Product } from '@/interfaces/Products'
 import filterIcon from '@/assets/icons/filtering.png'
 import gridIcon from '@/assets/icons/grid.png'
 import listIcon from '@/assets/icons/Vector.png'
 import ListProducts from '@/components/ListProducts'
-
-type Props = {}
 
 type Category = {
 	name: string
@@ -16,7 +14,7 @@ type data = {
 	categories: Category[]
 }
 
-const ShopPage = (props: Props) => {
+const ShopPage = () => {
 	const [data, setData] = useState<data>({ products: [], categories: [] })
 	const [display, setDisplay] = useState('h-0')
 	const [activeCate, setActiveCate] = useState('')
@@ -69,22 +67,27 @@ const ShopPage = (props: Props) => {
 						<img src={listIcon} alt='' />
 					</span>
 					<span className='__resultOption'>
-						<p>
-							Showing <span className='__indexResults'>1 - 16</span> of <span className='__totalResult'>32</span>
-						</p>
+						{filter.category !== '' ? (
+							<p>
+								Showing products of <strong className='__indexResults'>{filter.category}</strong>
+							</p>
+						) : (
+							'All'
+						)}
 					</span>
 				</div>
 				<div className='filter__byKeyword'>
 					<p>Show</p>
-					<span className='__resultsShowing'>16</span>
+					<span className=''>{filter.category ? filter.category : 'All'}</span>
 					<p>Short by</p>
-					<input className='__inputFilKeyword' type='text' placeholder='Default' onChange={searchKeyword} />
+					<input className='__inputFilKeyword' type='text' placeholder='Search ...' onChange={searchKeyword} />
 				</div>
 			</div>
 			<div className={'bg-[#f9f1e9] shadow-sm mb-30 overflow-hidden border-zinc-200 px-24 ' + display} onMouseLeave={() => setDisplay('h-0')}>
 				<ul className='overscrollHidden h-48 overflow-y-scroll'>
-					{data.categories.map((c) => (
+					{data.categories.map((c, index) => (
 						<li
+							key={index}
 							className={activeCate == c.name ? 'bg-zinc-500 text-white p-2' : 'p-2 cursor-pointer hover:text-white hover:bg-zinc-400'}
 							onClick={chooseCate(c.name)}
 						>

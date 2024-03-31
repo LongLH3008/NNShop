@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Product } from '@/interfaces/Products'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -142,7 +142,8 @@ const AddProduct = () => {
 						render={({ field }) => (
 							<FormItem className='flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4'>
 								<FormControl>
-									<Checkbox checked={field.value} onCheckedChange={field.onChange} />
+									<input type='checkbox' checked={field.value} onChange={field.onChange} />
+									{/* <Checkbox className='border-black ' checked={field.value} onCheckedChange={field.onChange} /> */}
 								</FormControl>
 								<FormLabel htmlFor='featured'>Featured</FormLabel>
 								<FormMessage />

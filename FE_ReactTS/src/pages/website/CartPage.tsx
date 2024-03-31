@@ -2,10 +2,30 @@ import ServicesComponent from '@/components/Services'
 import React from 'react'
 import removeIcon from '@/assets/icons/trash.svg'
 import testImg from '@/assets/images/test_image.png'
+import { useLocalStorage } from '@/hooks/useLocalStorage'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+import { prodsInCart } from '@/interfaces/Cart'
 
 type Props = {}
 
 const CartPage = (props: Props) => {
+	const [user] = useLocalStorage('user', {})
+	const userId = user?._id
+
+	const { data, isLoading, isError } = useQuery({
+		queryKey: ['cart', userId],
+		queryFn: async () => {
+			const { data } = await axios.get(`http://localhost:8080/api/v1/cart/${userId}`)
+			return data
+		},
+	})
+
+	console.log(data)
+
+	if (isLoading) return <p>...Loading</p>
+	if (isError) return <p>...Error</p>
+
 	return (
 		<>
 			<section className='header'>
@@ -25,28 +45,30 @@ const CartPage = (props: Props) => {
 								<li className='subtotal'>Subtotal</li>
 								<li className='remove'></li>
 							</ul>
-							<li className='infocart__listitem'>
-								<div className='img'>
-									<div className='infocart__imageitem'>
-										<img src={testImg} alt='' />
+							{data.data.map((item: prodsInCart, index: number) => (
+								<li key={index} className='infocart__listitem'>
+									<div className='img'>
+										<div className='infocart__imageitem'>
+											<img src={item.thumbnail ?? testImg} alt='' />
+										</div>
 									</div>
-								</div>
-								<p className='infocart__nameitem name'>Asgaard sofa</p>
-								<p className='infocart__priceitem price'>25.000.000đ</p>
-								<div className='quantity'>
-									<div className='infocart__quantityitem'>
-										<span className='minus'>-</span>
-										<span className='quanity'>1</span>
-										<span className='plus'>+</span>
+									<p className='infocart__nameitem name'>Asgaard sofa</p>
+									<p className='infocart__priceitem price'>25.000.000đ</p>
+									<div className='quantity'>
+										<div className='infocart__quantityitem'>
+											<span className='minus'>-</span>
+											<span className='quanity'>1</span>
+											<span className='plus'>+</span>
+										</div>
 									</div>
-								</div>
-								<p className='infocart__subtotalitem subtotal'>25.000.000đ</p>
-								<div className='remove'>
-									<div className='infocart__removeitem'>
-										<img src={removeIcon} alt='' />
+									<p className='infocart__subtotalitem subtotal'>25.000.000đ</p>
+									<div className='remove'>
+										<div className='infocart__removeitem'>
+											<img src={removeIcon} alt='' />
+										</div>
 									</div>
-								</div>
-							</li>
+								</li>
+							))}
 						</ul>
 						<form method='' action='#' className='infocart__checkout'>
 							<h3 className='infocart__titletotal'>Cart Totals</h3>

@@ -24,7 +24,7 @@ const ListProducts = (prop: Props) => {
 					</div>
 				) : (
 					<p>
-						There is no data products with {category !== '' ? +category : ''} {keyword !== '' ? 'keyword ' + keyword : ''} :(
+						There is no data products with {category !== '' ? 'category ' + category : ''} {keyword !== '' ? 'keyword ' + keyword : ''} :(
 					</p>
 				)}
 			</div>

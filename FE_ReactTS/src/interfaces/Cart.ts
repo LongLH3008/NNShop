@@ -1,12 +1,12 @@
-type prodsInCart = {
-	id: number
+export type prodsInCart = {
+	_id: number
 	title: string
 	price: number
 	quantity: number
-	total: number
-	discountPercentage: number
-	discountedPrice: number
-	thumbnail: string
+	total?: number
+	discountPercentage?: number
+	discountedPrice?: number
+	thumbnail?: string
 }
 
 export type Carts = {

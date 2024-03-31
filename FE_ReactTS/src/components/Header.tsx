@@ -33,7 +33,7 @@ const HeaderComponent: React.FC = () => {
 						</NavLink>
 					</Nav>
 					<Nav className='navbar__features'>
-						<Link className='hover:tw-bg-yellow-600 tw-p-3 tw-rounded-full' to='/infouser'>
+						<Link className='hover:tw-bg-yellow-600 tw-p-3 tw-rounded-full' to='/signin'>
 							<img src={infoIcon} alt='' />
 						</Link>
 						<Link className='hover:tw-bg-yellow-600 tw-p-3 tw-rounded-full' to='/search'>

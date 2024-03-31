@@ -10,6 +10,8 @@ import EditProduct from './pages/admin/product/edit'
 import ShopPage from './pages/website/Shop'
 import CartPage from './pages/website/CartPage'
 import { Toaster } from './components/ui/toaster'
+import SignUp from '@/pages/website/Signup'
+import SignIn from './pages/website/Signin'
 
 function App() {
 	return (
@@ -32,6 +34,8 @@ function App() {
 					<Route path='product/add' element={<AddProduct />} />
 					<Route path='product/:id/edit' element={<EditProduct />} />
 				</Route>
+				<Route path='/signin' element={<SignIn />} />
+				<Route path='/signup' element={<SignUp />} />
 			</Routes>
 			<Toaster />
 		</>

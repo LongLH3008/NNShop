@@ -29,15 +29,10 @@ export const getCartByUserId = async (req, res) => {
 	try {
 		const { userId } = req.params;
 		const cart = await Cart.findOne({ userId }).populate("products.productId");
-		const data = {
-			products: cart.products.map((c) => ({
-				productId: c.productId._id,
-				name: c.productId.title,
-				quantity: c.quantity,
-			})),
-		};
+		const data = [...cart.products];
 		res.status(200).json({
-			data: data.products,
+			// data: data.products,
+			data,
 		});
 	} catch (error) {
 		res.status(500).json({
