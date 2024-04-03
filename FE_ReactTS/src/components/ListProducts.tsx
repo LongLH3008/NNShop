@@ -12,7 +12,7 @@ const ListProducts = (prop: Props) => {
 
 	let products =
 		category !== ''
-			? data.filter((pd) => pd.title?.includes(keyword) && pd.category === category)
+			? data.filter((pd) => pd.title?.includes(keyword) && pd.category?.name === category)
 			: data.filter((pd) => pd.title?.includes(keyword))
 
 	return (

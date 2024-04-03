@@ -29,7 +29,7 @@ const ProductComponent: React.FC<ProductProps> = ({ product }) => {
 			</div>
 			<div className='product__infoItem'>
 				<p className='product__nameItem'>{product.title}</p>
-				<p className='product__cateItem'>{product.category}</p>
+				<p className='product__cateItem'>{product.category?.name}</p>
 				<div className='product__priceItem'>
 					<span className='product__price'>{handleCalcPrice(product.price, product.discountPercentage)} $</span>
 					{product.discountPercentage && product.discountPercentage > 0 ? (
@@ -41,10 +41,10 @@ const ProductComponent: React.FC<ProductProps> = ({ product }) => {
 			</div>
 			<div className='product__feature'>
 				<div className='__btns'>
-					<Link to={`/cart/${product.id}`} className='__addtocart'>
+					<Link to={`/cart/${product._id}`} className='__addtocart'>
 						Add to cart
 					</Link>
-					<Link to={`/products/${product.id}`} className='__view'>
+					<Link to={`/products/${product._id}`} className='__view'>
 						View product
 					</Link>
 					<div className='__more'>

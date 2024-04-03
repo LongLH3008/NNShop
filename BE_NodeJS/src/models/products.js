@@ -36,8 +36,8 @@ const schema = new Schema(
 			required: true,
 		},
 		category: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Categories",
+			type: Schema.Types.ObjectId,
+			ref: "Category",
 			required: true,
 		},
 		thumbnail: {

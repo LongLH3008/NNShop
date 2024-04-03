@@ -6,7 +6,7 @@ import { Product } from '@/interfaces/Products'
 
 type prop = {
 	category: string | any
-	id: number | string | any
+	id: string
 }
 
 const RelatedProduct: React.FC<prop> = ({ category, id }) => {

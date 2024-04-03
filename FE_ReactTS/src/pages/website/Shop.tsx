@@ -4,6 +4,7 @@ import filterIcon from '@/assets/icons/filtering.png'
 import gridIcon from '@/assets/icons/grid.png'
 import listIcon from '@/assets/icons/Vector.png'
 import ListProducts from '@/components/ListProducts'
+import axios from 'axios'
 
 type Category = {
 	name: string
@@ -33,18 +34,15 @@ const ShopPage = () => {
 	}
 
 	useEffect(() => {
-		const fetchData = async () => {
+		;(async () => {
 			try {
-				const res = await fetch(`http://localhost:3000/products`)
-				const res2 = await fetch(`http://localhost:3000/categories`)
-				const data: Product[] = await res.json()
-				const data2: Category[] = await res2.json()
-				setData({ products: data, categories: data2 })
+				const res = await axios.get(`http://localhost:8080/api/v1/products`)
+				const res2 = await axios.get(`http://localhost:8080/api/v1/category`)
+				setData({ products: res.data.data, categories: res2.data.data })
 			} catch (err) {
 				console.log(err)
 			}
-		}
-		fetchData()
+		})()
 	}, [])
 
 	return (
@@ -69,7 +67,7 @@ const ShopPage = () => {
 					<span className='__resultOption'>
 						{filter.category !== '' ? (
 							<p>
-								Showing products of <strong className='__indexResults'>{filter.category}</strong>
+								Showing of <strong className='__indexResults'>{filter.category}</strong>
 							</p>
 						) : (
 							'All'

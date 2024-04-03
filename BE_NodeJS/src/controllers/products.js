@@ -4,7 +4,7 @@ import productsSchema from "../schemas/products.js";
 
 const getProds = async (req, res) => {
 	try {
-		const data = await productsModel.find();
+		let data = await productsModel.find().populate("category");
 		res.status(StatusCodes.OK).send({
 			message: "OK",
 			data,

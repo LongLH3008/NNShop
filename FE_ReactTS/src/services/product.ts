@@ -5,14 +5,13 @@ export const getAllProducts = async (): Promise<Product[]> => {
 	try {
 		const response = await instance.get('/products')
 		console.log(response.data)
-
 		return response.data
 	} catch (error) {
 		return []
 	}
 }
 
-export const getProductById = async (id: number | string) => {
+export const getProductById = async (id: string) => {
 	try {
 		const response = await instance.get(`/products/${id}`)
 		return response.data
@@ -23,8 +22,8 @@ export const getProductById = async (id: number | string) => {
 
 export const getNewProducts = async (): Promise<Product[]> => {
 	try {
-		const response = await instance.get('/products')
-		const filter = response.data.filter((pd: Product) => pd?.featured == true)
+		const { data } = await instance.get('/products')
+		const filter = data.data.filter((pd: Product) => pd?.featured == true)
 		return filter
 	} catch (error) {
 		return []
@@ -42,14 +41,13 @@ export const addProduct = async (product: Product) => {
 
 type prod = {
 	category: string
-	id: number | string
+	id: string
 }
 
 export const getRelatedProducts = async (prod: prod) => {
 	try {
-		const response = await instance.get(`/products`)
-		const related = await response.data.filter((pd: Product) => pd.category === prod.category && pd.id != prod.id)
-		console.log(related)
+		const { data } = await instance.get(`/products`)
+		const related = await data.data.filter((pd: Product) => pd.category?._id == prod.category && pd._id != prod.id)
 		return related.splice(0, 4)
 	} catch (error) {
 		console.log(error)

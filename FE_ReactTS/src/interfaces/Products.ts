@@ -4,7 +4,7 @@
 // product, products, cart, carts, user, users
 
 export type Product = {
-	id: number
+	_id: number | string
 	title: string
 	featured: boolean
 	description: string
@@ -13,7 +13,11 @@ export type Product = {
 	rating?: number
 	stock?: number
 	brand?: string
-	category?: string
+	category?: {
+		_id: string
+		name: string
+		slug?: string
+	}
 	thumbnail?: string
 	images?: string[]
 }

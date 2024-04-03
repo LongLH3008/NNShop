@@ -25,7 +25,9 @@ const DetailProduct = (props: Props) => {
 		}
 	}
 
-	const images = product?.images
+	console.log(product?.data)
+
+	const images = product?.data?.images
 
 	if (isLoading) return <p>...Loading</p>
 	return (
@@ -42,16 +44,16 @@ const DetailProduct = (props: Props) => {
 								))}
 							</ul>
 							<div className='detailproduct__showingImage'>
-								<img src={product?.thumbnail} alt='' />
+								<img src={product?.data?.thumbnail} alt='' />
 							</div>
 						</div>
 						<div className='detailproduct__info'>
 							<div className='detailproduct__mainInfo'>
-								<p className='detailproduct__name'>{product.title}</p>
+								<p className='detailproduct__name'>{product?.data?.title}</p>
 								<div className='detailproduct__price'>
 									<span className='product__price'>{handleCalcPrice(product.price, product.discountPercentage)} $</span>
-									{product.discountPercentage && product.discountPercentage > 0 ? (
-										<span className='product__saleprice'>{product.price} $</span>
+									{product?.data?.discountPercentage && product?.data?.discountPercentage > 0 ? (
+										<span className='product__saleprice'>{product?.data?.price} $</span>
 									) : (
 										''
 									)}
@@ -66,7 +68,7 @@ const DetailProduct = (props: Props) => {
 									</div>
 									<span className='detailproduct__totalvote'> 5 Customer Review </span>
 								</div>
-								<p className='detailproduct__introduce'>{product.description}</p>
+								<p className='detailproduct__introduce'>{product?.data?.description}</p>
 								<div className='detailproduct__sizes'>
 									<p>Size</p>
 									<div className='detailproduct__sizebtns'>
@@ -170,7 +172,7 @@ const DetailProduct = (props: Props) => {
 			</section>
 			<div className='__crossline_detailpage' />
 			{/* End More Info */}
-			<RelatedProduct category={product?.category} id={product?.id} />
+			<RelatedProduct category={product?.data?.category} id={product?.data?._id} />
 			<div className='__crosslinefooter' />
 			{/* End Related Product */}
 		</>
