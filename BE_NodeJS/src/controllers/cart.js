@@ -71,6 +71,60 @@ export const removeItemFromCart = async (req, res) => {
 	}
 };
 
+export const increaseQuantity = async (req, res) => {
+	const { userId, productId } = req.body;
+	try {
+		let cart = await Cart.findOne({ userId });
+		if (!cart) {
+			return res.status(401).json({
+				message: "Cart not found",
+			});
+		}
+		const product = cart.products.find((item) => item.productId.toString() === productId);
+		if (!product) {
+			return res.status(401).json({
+				message: "Product not found",
+			});
+		}
+		product.quantity++;
+		await cart.save();
+		res.status(200).json({
+			cart,
+		});
+	} catch (error) {
+		res.status(500).json({
+			error,
+		});
+	}
+};
+
+export const decreaseQuantity = async (req, res) => {
+	const { userId, productId } = req.body;
+	try {
+		let cart = await Cart.findOne({ userId });
+		if (!cart) {
+			return res.status(401).json({
+				message: "Cart not found",
+			});
+		}
+		const product = cart.products.find((item) => item.productId.toString() === productId);
+		if (!product) {
+			return res.status(401).json({
+				message: "Product not found",
+			});
+		}
+		product.quantity > 1 && product.quantity--;
+		await cart.save();
+		res.status(200).json({
+			cart,
+		});
+	} catch (error) {
+		res.status(500).json({
+			error,
+		});
+	}
+};
+
 export const updateItemFromCart = async (req, res) => {
 	const { userId, productId, quantity } = req.body;
 	try {
@@ -97,7 +151,7 @@ export const updateItemFromCart = async (req, res) => {
 			})),
 		};
 		res.status(200).json({
-			message: "Added to cart",
+			message: "Updated",
 			data,
 		});
 	} catch (error) {

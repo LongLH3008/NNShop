@@ -17,7 +17,7 @@ export const signup = async (req, res) => {
 		const userExist = await User.findOne({ email: email });
 		if (userExist) {
 			return res.status(StatusCodes.BAD_REQUEST).json({
-				message: "Email already exists",
+				email: "Email already exists",
 			});
 		}
 		const hashPassword = await bcryptjs.hash(password, 10);
@@ -51,13 +51,13 @@ export const signin = async (req, res) => {
 		const userExist = await User.findOne({ email: email });
 		if (!userExist) {
 			return res.status(401).json({
-				message: "User does not exist",
+				email: "User does not exist",
 			});
 		}
 		const checkPassword = await bcryptjs.compare(password, userExist.password);
 		if (!checkPassword) {
 			return res.status(401).json({
-				message: "Wrong password",
+				password: "Wrong password",
 			});
 		}
 		const token = jwt.sign({ userId: userExist._id }, "123456");

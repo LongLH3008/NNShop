@@ -13,7 +13,10 @@ import { useLocalStorage } from '@/hooks/useLocalStorage'
 type Props = {}
 
 const signinSchema = Joi.object({
-	email: Joi.string().required(),
+	email: Joi.string()
+		.email({ tlds: { allow: false } })
+		.min(3)
+		.required(),
 	password: Joi.string().min(6).required(),
 })
 
@@ -25,6 +28,7 @@ const SignIn = (props: Props) => {
 		register,
 		handleSubmit,
 		formState: { errors },
+		setError,
 	} = useForm({
 		resolver: joiResolver(signinSchema),
 		defaultValues: {
@@ -35,14 +39,27 @@ const SignIn = (props: Props) => {
 
 	const { mutate } = useMutation({
 		mutationFn: async (formData: { email: string; password: string }) => {
-			const { data } = await axios.post(`http://localhost:8080/api/v1/auth/signin`, formData)
-			const { user } = data
-			return user
+			try {
+				const { data } = await axios.post(`http://localhost:8080/api/v1/auth/signin`, formData)
+				const { user } = data
+				return user
+			} catch (error: any) {
+				throw error.response.data
+			}
 		},
-		onSuccess: (user) => setUser(user),
-		onError: (error) => console.log(error),
+		onSuccess: (user) => {
+			setTimeout(() => navigate('/'), 500)
+			setUser(user)
+			toast({
+				title: 'Welcome',
+				variant: 'success',
+			})
+		},
+		onError: (error: any) => {
+			error.email && setError('email', { message: error.email })
+			error.password && setError('password', { message: error.password })
+		},
 	})
-
 	const onSubmit = (formData: { email: string; password: string }) => {
 		mutate(formData)
 	}

@@ -1,12 +1,13 @@
 export type prodsInCart = {
-	_id: number
-	title: string
-	price: number
+	productId: {
+		_id: number
+		title: string
+		price: number
+		discountPercentage?: number
+		discountedPrice?: number
+		thumbnail?: string
+	}
 	quantity: number
-	total?: number
-	discountPercentage?: number
-	discountedPrice?: number
-	thumbnail?: string
 }
 
 export type Carts = {
