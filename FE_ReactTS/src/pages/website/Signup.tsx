@@ -28,7 +28,7 @@ const SignUp = (props: Props) => {
 		formState: { errors },
 		setError,
 	} = useForm({
-		resolver: joiResolver(signupSchema),
+		// resolver: joiResolver(signupSchema),
 		defaultValues: {
 			email: '',
 			password: '',
@@ -59,7 +59,10 @@ const SignUp = (props: Props) => {
 			navigate('/signin')
 		},
 		onError: (error: any) => {
-			error.email && setError('email', { message: error.email })
+			error.err.map(({ path, message }: any) => {
+				path && setError(path, { message })
+				console.log({ path, message })
+			})
 		},
 	})
 	const onSubmit = (formData: { email: string; password: string; confirmPassword: string }) => {

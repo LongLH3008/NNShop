@@ -9,19 +9,23 @@ export const signup = async (req, res) => {
 		const { email, password, name, avatar } = req.body;
 		const { error } = signupSchema.validate(req.body, { abortEarly: false });
 		if (error) {
-			const err = error.details.map((e) => e.message);
+			const err = error.details.map(({ message, path }) => ({ message, path: path[0] }));
 			return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-				message: err,
+				err,
 			});
 		}
 		const userExist = await User.findOne({ email: email });
 		if (userExist) {
 			return res.status(StatusCodes.BAD_REQUEST).json({
-				email: "Email already exists",
+				err: [
+					{
+						path: "email",
+						message: "Email already exists",
+					},
+				],
 			});
 		}
 		const hashPassword = await bcryptjs.hash(password, 10);
-
 		const newUser = await User.create({
 			name,
 			email,
@@ -43,21 +47,31 @@ export const signin = async (req, res) => {
 		const { email, password } = req.body;
 		const { error } = signinSchema.validate(req.body, { abortEarly: false });
 		if (error) {
-			const messages = error.details.map((error) => error.message);
-			return res.status(400).json({
-				messages,
+			const err = error.details.map(({ message, path }) => ({ message, path: path[0] }));
+			return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+				err,
 			});
 		}
 		const userExist = await User.findOne({ email: email });
 		if (!userExist) {
-			return res.status(401).json({
-				email: "User does not exist",
+			return res.status(StatusCodes.BAD_REQUEST).json({
+				err: [
+					{
+						path: "email",
+						message: "User does not exists",
+					},
+				],
 			});
 		}
 		const checkPassword = await bcryptjs.compare(password, userExist.password);
 		if (!checkPassword) {
-			return res.status(401).json({
-				password: "Wrong password",
+			return res.status(StatusCodes.BAD_REQUEST).json({
+				err: [
+					{
+						path: "password",
+						message: "Wrong password",
+					},
+				],
 			});
 		}
 		const token = jwt.sign({ userId: userExist._id }, "123456");

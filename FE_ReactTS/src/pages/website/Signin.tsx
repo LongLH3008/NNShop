@@ -57,8 +57,10 @@ const SignIn = (props: Props) => {
 			})
 		},
 		onError: (error: any) => {
-			error.email && setError('email', { message: error.email })
-			error.password && setError('password', { message: error.password })
+			error.err.map(({ path, message }: any) => {
+				path && setError(path, { message })
+				console.log({ path, message })
+			})
 		},
 	})
 	const onSubmit = (formData: { email: string; password: string }) => {
