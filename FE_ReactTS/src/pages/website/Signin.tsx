@@ -53,6 +53,7 @@ const SignIn = (props: Props) => {
 			toast({
 				title: 'Welcome',
 				variant: 'success',
+				duration: 3000,
 			})
 		},
 		onError: (error: any) => {

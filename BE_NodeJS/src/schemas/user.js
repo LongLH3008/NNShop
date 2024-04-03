@@ -1,8 +1,7 @@
 import Joi from "joi";
 
 const signupSchema = Joi.object({
-	name: Joi.string().min(3).max(30).required().messages({
-		"any.required": "Name required",
+	name: Joi.string().min(3).max(30).messages({
 		"string.empty": "Name do not empty",
 		"string.min": "Name must be at least {#limit} characters",
 		"string.max": "Name must be at most {#limit} characters",
@@ -19,10 +18,10 @@ const signupSchema = Joi.object({
 		"string.max": "Password must be at most {#limit} characters",
 	}),
 	// .valid(Joi.ref('...')) => So sánh tham chiếu đến 1 giá trị
-	confirmPassword: Joi.string().required().valid(Joi.ref("password")).messages({
-		"any.required": "Password required",
-		"any.only": "Password not match",
-	}),
+	// confirmPassword: Joi.string().required().valid(Joi.ref("password")).messages({
+	// 	"any.required": "Password required",
+	// 	"any.only": "Password not match",
+	// }),
 	avatar: Joi.string().uri().message({
 		"string.uri": "Avartar URI invalid",
 	}),
