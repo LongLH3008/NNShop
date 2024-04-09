@@ -223,7 +223,6 @@ a {
 			flex-direction: column;
 			gap: 20px;
 			span {
-				color: #fff;
 				@include flex_row(center, center, none);
 				gap: 3px;
 			}

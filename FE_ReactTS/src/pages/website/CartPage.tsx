@@ -3,24 +3,43 @@ import testImg from '@/assets/images/test_image.png'
 import ServicesComponent from '@/components/Services'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { prodsInCart } from '@/interfaces/Cart'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 
 type Props = {}
 
 const CartPage = (props: Props) => {
+	const queryClient = useQueryClient()
 	const [user] = useLocalStorage('user', {})
 	const userId = user?._id
 
-	const handleIncrease = async (id: any) => {
-		const { data } = await axios.post(`http://localhost:8080/api/v1/cart/increase`, { userId, productId: id })
-		console.log('increase' + { data })
-	}
+	const handleIncrease = useMutation({
+		mutationFn: async (productId: any) => {
+			const { data } = await axios.post(`http://localhost:8080/api/v1/cart/increase`, {
+				userId,
+				productId,
+			})
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: ['cart', userId],
+			})
+		},
+	})
 
-	const handleDecrease = async (id: any) => {
-		const { data } = await axios.post(`http://localhost:8080/api/v1/cart/decrease`, { userId, productId: id })
-		console.log('decrease' + { data })
-	}
+	const handleDecrease = useMutation({
+		mutationFn: async (productId: any) => {
+			const { data } = await axios.post(`http://localhost:8080/api/v1/cart/decrease`, {
+				userId,
+				productId,
+			})
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: ['cart', userId],
+			})
+		},
+	})
 
 	const {
 		data: cart,
@@ -57,7 +76,7 @@ const CartPage = (props: Props) => {
 								<li className='subtotal'>Subtotal</li>
 								<li className='remove'></li>
 							</ul>
-							{cart.map((item: prodsInCart, index: number) => (
+							{cart?.map((item: prodsInCart, index: number) => (
 								<li key={index} className='infocart__listitem'>
 									<div className='img'>
 										<div className='infocart__imageitem'>
@@ -68,11 +87,11 @@ const CartPage = (props: Props) => {
 									<p className='infocart__priceitem price'>{item.productId?.price} $</p>
 									<div className='quantity'>
 										<div className='infocart__quantityitem'>
-											<span className='minus' onClick={() => handleDecrease(item.productId._id)}>
+											<span className='minus' onClick={() => handleDecrease.mutate(item.productId._id)}>
 												-
 											</span>
 											<span className='quanityproduct'>{item.quantity}</span>
-											<span className='plus' onClick={() => handleIncrease(item.productId._id)}>
+											<span className='plus' onClick={() => handleIncrease.mutate(item.productId._id)}>
 												+
 											</span>
 										</div>

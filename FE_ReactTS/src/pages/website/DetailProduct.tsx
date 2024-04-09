@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { getProductById } from '@/services/product.ts'
 import fbIcon from '@/assets/icons/fb.png'
@@ -7,6 +7,9 @@ import twitterIcon from '@/assets/icons/twitter.png'
 import starLogo from '@/assets/icons/star.png'
 import halfStarLogo from '@/assets/icons/half_star.png'
 import RelatedProduct from '@/components/RelatedProduct'
+import { useLocalStorage } from '@/hooks/useLocalStorage'
+import axios from 'axios'
+import { toast } from '@/components/ui/use-toast'
 
 type Props = {}
 
@@ -17,6 +20,30 @@ const DetailProduct = (props: Props) => {
 		queryFn: async () => await getProductById(id as string),
 	})
 
+	const queryClient = useQueryClient()
+	const [user] = useLocalStorage('user', {})
+	const userId = user?._id
+
+	const { mutate } = useMutation({
+		mutationFn: async ({ productId, quantity }: { productId: any; quantity: number }) => {
+			const { data } = await axios.post(`http://localhost:8080/api/v1/cart/add`, {
+				userId,
+				productId,
+				quantity,
+			})
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: ['cart', userId],
+			})
+			toast({
+				variant: 'success',
+				title: 'Added to Cart',
+				duration: 3000,
+			})
+		},
+	})
+
 	const handleCalcPrice = (price: number, discountPercent: number | undefined | null) => {
 		if (typeof discountPercent == 'number' && discountPercent > 0) {
 			return price - Math.floor((price * discountPercent) / 100)
@@ -24,8 +51,6 @@ const DetailProduct = (props: Props) => {
 			return price
 		}
 	}
-
-	console.log(product?.data)
 
 	const images = product?.data?.images
 
@@ -100,7 +125,9 @@ const DetailProduct = (props: Props) => {
 										<span className='plus'>+</span>
 									</div>
 									<div className='detailproduct__add_compare'>
-										<button className='detailproduct__addtocart'>Add To Cart</button>
+										<button className='detailproduct__addtocart' onClick={() => mutate({ productId: id, quantity: 1 })}>
+											Add To Cart
+										</button>
 										<button className='detailproduct__compare'>+ Compare</button>
 									</div>
 								</div>

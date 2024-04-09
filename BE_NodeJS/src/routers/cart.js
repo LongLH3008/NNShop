@@ -11,7 +11,7 @@ import {
 const router = Router();
 
 router.get("/cart/:userId", getCartByUserId);
-router.post("/cart", addItemToCart);
+router.post("/cart/add", addItemToCart);
 router.post("/cart/increase", increaseQuantity);
 router.post("/cart/decrease", decreaseQuantity);
 router.put("/cart", updateItemFromCart);
